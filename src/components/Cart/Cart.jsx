@@ -11,7 +11,6 @@ import StripeCheckout from "react-stripe-checkout";
 import {
   deleteFromCart,
   clearCart,
-  addToCart,
   increaseQuantity,
   reduceQuantity,
 } from "../../States/Redux/cartRedux";
@@ -168,16 +167,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, total } = useSelector((state) => state.cartReducer);
-  // console.log(cartReducer.product);
-  // const ndu = cartReducer.product.map((p) => p.quantity);
-
-  // console.log(ndu);
 
   const { authData } = useSelector((state) => state.userReducer);
   const user = authData;
-
-  const Key =
-    "pk_test_51MD6WxDZNN8gl0X1RDm7u38qO4i6OBUJ31YhMcapPaDgCWFk5LtckqARnp8LiYEeqrA4HhQYkRstZfmhlh4U5lDn00SJVCovrN";
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -204,14 +196,6 @@ const Cart = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-
-  // const handleQuantity = (type) => {
-  //   if (type === "inc") {
-  //     setQuantity(quantity + 1);
-  //   } else if (type === "dec") {
-  //     setQuantity(quantity - 1);
-  //   }
-  // };
 
   const handleDelete = (p) => {
     dispatch(deleteFromCart({ _id: p._id, totalPrice: p.totalPrice }));
@@ -285,20 +269,20 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {total}</SummaryItemPrice>
             </SummaryItem>
-            {/* <StripeCheckout
+            <StripeCheckout
               name={user.firstName}
-              description={`Your Total is ${cartReducer.total}`}
+              description={`Your Total is ${total}`}
               // image={cartReducer.p}
-              amount={cartReducer.total * 100}
+              amount={total * 100}
               currency="NGN"
-              stripeKey={Key}
+              stripeKey={process.env.REACT_APP_STRIPE_KEY}
               token={onToken}
               email={user.email}
               // billingAddress
               // shippingAddress
             >
               <Button>CHECKOUT NOW</Button>
-            </StripeCheckout> */}
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>

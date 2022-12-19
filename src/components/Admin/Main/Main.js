@@ -8,9 +8,9 @@ const Main = () => {
   return (
     <div>
       <AllProducts />
-      {/* <Orders /> */}
-      {/* <Revenue /> */}
-      {/* <UserStats /> */}
+      <Orders />
+      <Revenue />
+      <UserStats />
     </div>
   );
 };

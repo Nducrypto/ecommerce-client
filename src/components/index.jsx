@@ -7,7 +7,7 @@ import Cart from "./Cart/Cart";
 import Navbar from "./Navbar/Navbar";
 import Announcement from "./Announcement/Announcement";
 import Succes from "./Succes";
-import Main from "./Adnin/Main/Main";
+import Main from "./Admin/Main/Main";
 
 export {
   ProductDetail,

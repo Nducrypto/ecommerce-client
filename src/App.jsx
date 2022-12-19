@@ -20,7 +20,7 @@ import {
   Navbar,
   Announcement,
   Succes,
-  Main,
+  // Main,
 } from "./components";
 import { getAllProducts } from "./States/Actions/ProductAction";
 
