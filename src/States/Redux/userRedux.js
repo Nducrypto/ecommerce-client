@@ -12,6 +12,7 @@ const userSlice = createSlice({
       state.loading = true;
     },
     loginSuccess: (state, action) => {
+      localStorage.setItem("userRedux", JSON.stringify({ ...action.payload }));
       state.authData = action.payload;
       state.loading = false;
     },

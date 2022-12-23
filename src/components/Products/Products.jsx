@@ -1,90 +1,41 @@
-import styled from "styled-components";
+import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useStateContext } from "../../States/Hooks/ContextProvider";
+import { useEffect } from "react";
+import { publicApi } from "../../States/Api";
 import {
-  FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { publicRequest } from "../../States/Api/index";
-const Container = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Typography,
+  IconButton,
+  Grid,
+} from "@mui/material";
+import ShareIcon from "@mui/icons-material/Share";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const Info = styled.div`
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease;
-  cursor: pointer;
-`;
+const Products = () => {
+  const navigate = useNavigate();
 
-const Content = styled.div`
-  flex: 1;
-  margin: 5px;
-  min-width: 280px;
-  height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5fbfd;
-  position: relative;
-
-  &:hover ${Info} {
-    opacity: 1;
-  }
-`;
-
-const Circle = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: white;
-  position: absolute;
-`;
-
-const Image = styled.img`
-  height: 75%;
-  z-index: 2;
-`;
-
-const Icon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-  transition: all 0.5s ease;
-  &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.1);
-  }
-`;
-
-const Products = ({ cat, sort, filters }) => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const {
+    setProducts,
+    products,
+    setFilteredProducts,
+    filters,
+    filteredProducts,
+    sort,
+    cat,
+  } = useStateContext();
 
   // ========PRODUCTS USEEFFECT
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const { data } = await publicRequest.get(
-          cat ? `/products?categories=${cat} ` : "/products "
+        const { data } = await publicApi.get(
+          cat ? `/products?categories=${cat}` : "/products"
         );
         setProducts(data);
       } catch (error) {
@@ -92,7 +43,7 @@ const Products = ({ cat, sort, filters }) => {
       }
     };
     getProducts();
-  }, [cat]);
+  }, [cat, setProducts]);
 
   // ========FILTEREDPRODUCTS USEEFFECT
   useEffect(() => {
@@ -105,7 +56,7 @@ const Products = ({ cat, sort, filters }) => {
         )
       );
     }
-  }, [cat, products, filters]);
+  }, [cat, products, filters, setFilteredProducts]);
 
   // ========SORT USEEFFECT
   useEffect(() => {
@@ -122,32 +73,66 @@ const Products = ({ cat, sort, filters }) => {
         [...prev].sort((a, b) => b.price - a.price)
       );
     }
-  }, [sort]);
+  }, [sort, setFilteredProducts]);
 
-  const changer = cat ? filteredProducts : products.slice(0, 2);
-
+  // const changer = cat ? filteredProducts : products.slice(0, 2);
+  const changer = cat ? filteredProducts : products;
   return (
-    <Container>
-      {changer.map((item) => (
-        <Content key={item._id}>
-          <Circle />
-          <Image src={item.image} />
-          <Info>
-            <Icon>
-              <ShoppingCartOutlined />
-            </Icon>
-            <Icon>
-              <Link to={`/product/${item._id}`}>
-                <SearchOutlined />
-              </Link>
-            </Icon>
-            <Icon>
-              <FavoriteBorderOutlined />
-            </Icon>
-          </Info>
-        </Content>
-      ))}
-    </Container>
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <Grid
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          // justifyContent: "center",
+          // alignItems: "center",
+        }}
+        // container
+        // // alignItems="center"
+        // // spacing={3}
+        container
+        justifyContent="center"
+        alignItems="center"
+        spacing={3}
+      >
+        <Grid item xs={8} sm={4} md={4} lg={3}>
+          {changer?.map((item) => (
+            <Card key={item._id}>
+              <CardHeader
+                action={
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={item.title}
+              />
+              <CardMedia
+                component="img"
+                height="150"
+                image={item.image}
+                alt=""
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {item.description}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+                <SearchOutlined
+                  onClick={() => navigate(`/productDetail/${item._id}`)}
+                />
+                <ShoppingCartOutlined />
+              </CardActions>
+            </Card>
+          ))}
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 

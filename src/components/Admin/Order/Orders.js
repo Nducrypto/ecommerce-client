@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { publicRequest } from "../../../States/Api";
+import { publicApi } from "../../../States/Api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,7 +8,7 @@ const Orders = () => {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const { data } = await publicRequest.get("/orders");
+        const { data } = await publicApi.get("/orders");
 
         setOrders(data);
       } catch (error) {}

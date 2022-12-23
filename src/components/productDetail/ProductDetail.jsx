@@ -7,7 +7,8 @@ import Newsletter from "../Newsletter";
 import { mobile } from "../../responsive";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../States/Redux/cartRedux";
-import { publicRequest } from "../../States/Api";
+// import { publicApi } from "../../States/Api";
+import axios from "axios";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -129,7 +130,9 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const { data } = await publicRequest.get("/products/" + id);
+        const { data } = await axios.get(
+          "http://localhost:5000/api/products/" + id
+        );
         setProduct(data);
       } catch (error) {}
     };

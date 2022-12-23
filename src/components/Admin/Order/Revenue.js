@@ -1,6 +1,6 @@
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { userRequest } from "../../../States/Api";
+import { userApi } from "../../../States/Api";
 
 const Revenue = () => {
   const [income, setIncome] = useState([]);
@@ -9,7 +9,7 @@ const Revenue = () => {
   useEffect(() => {
     const getStats = async () => {
       try {
-        const { data } = await userRequest.get("/orders/income");
+        const { data } = await userApi.get("/orders/income");
         setPercentage((data[1].total * 100) / data[0].total - 100);
         setIncome(data);
         // Getting Percentage between previous and current month

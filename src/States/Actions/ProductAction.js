@@ -12,6 +12,7 @@ export const getAllProducts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchAll();
     dispatch(getProductSuccess(data));
+    console.log(data);
   } catch (error) {
     dispatch(getProductFailure(error.message));
     console.log(error.message);

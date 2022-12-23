@@ -2,9 +2,9 @@ import styled from "styled-components";
 import Newsletter from "../Newsletter";
 import Footer from "../Footer/Footer";
 import { mobile } from "../../responsive";
-import Products from "./Products";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import Products from "../Products/Products";
+
+import { useStateContext } from "../../States/Hooks/ContextProvider";
 
 const Container = styled.div``;
 
@@ -37,11 +37,8 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductList = () => {
-  const [filters, setFilters] = useState({});
+  const { filters, setFilters, setSort, cat } = useStateContext();
 
-  const [sort, setSort] = useState("newest");
-  const location = useLocation();
-  const cat = location.pathname.split("/")[2];
   const handleFilters = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
@@ -81,7 +78,8 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products cat={cat} sort={sort} filters={filters} />
+
+      <Products />
       <Newsletter />
       <Footer />
     </Container>

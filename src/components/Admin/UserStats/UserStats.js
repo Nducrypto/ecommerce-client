@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { publicRequest } from "../../../States/Api";
+import { publicApi } from "../../../States/Api";
 
 const Orders = () => {
   const [userStats, setUserStats] = useState([]);
@@ -25,7 +25,7 @@ const Orders = () => {
   useEffect(() => {
     const getUserStats = async () => {
       try {
-        const { data } = await publicRequest.get("/users/stats");
+        const { data } = await publicApi.get("/users/stats");
         data.map((item) =>
           setUserStats((prev) => [
             ...prev,
