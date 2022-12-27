@@ -1,0 +1,58 @@
+.catContainer{
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.containerTwo{
+  flex: 1;
+  margin: 3px;
+  height: 70vh;
+  position: relative;
+}
+
+.catImage{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.catButton{
+  border: none;
+  padding: 10px;
+  background-color: white;
+  color: gray;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+@media (max-width: 600px) {
+    .catContainer{
+        display: flex;
+        padding: 0px;
+        flex-direction: column;
+    }
+    .image{
+        height: 20vh;
+        /* object-fit: cover; */
+      }
+      
+}

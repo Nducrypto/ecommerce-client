@@ -1,128 +1,123 @@
-import { Badge } from "@mui/material";
-import { Search, ShoppingCartOutlined } from "@mui/icons-material";
-import React from "react";
-import styled from "styled-components";
-import { mobile } from "../../responsive";
-import { useNavigate } from "react-router-dom";
+import { AppBar, Switch, Badge, Tooltip } from "@mui/material";
+
+import { ShoppingCartOutlined } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../States/Redux/userRedux";
 
-const Container = styled.div`
-  height: 60px;
-  ${mobile({ height: "50px" })};
-`;
-
-const Wrapper = styled.div`
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${mobile({ padding: "10px 0px" })}
-`;
-
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`;
-
-const Language = styled.span`
-  font-size: 14px;
-  cursor: pointer;
-  ${mobile({ display: "none" })}
-`;
-
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-`;
-
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: "50px" })}
-`;
-
-const Center = styled.div`
-  flex: 1;
-  text-align: center;
-`;
-
-const Logo = styled.h1`
-  font-weight: bold;
-  ${mobile({ fontSize: "24px" })}
-`;
-const Right = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  ${mobile({ flex: 2, justifyContent: "center" })}
-`;
-
-const MenuItem = styled.div`
-  font-size: 14px;
-  cursor: pointer;
-  margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
-`;
+import "./Navbar.css";
+import { useState } from "react";
+import Cart from "../Cart/Cart";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { product } = useSelector((state) => state.cartReducer);
-  const { authData } = useSelector((state) => state.userReducer);
 
-  // const userReducer = useSelector((state) => state.userReducer);
+  const user = JSON.parse(localStorage.getItem("userRedux"));
 
-  // console.log(userReducer);
-  const user = authData;
-  // const user = JSON.parse(
-  //   JSON.parse(localStorage.getItem("persist:root")).userReducer
-  // )?.authData;
-  // console.log(user);
   const logout = () => {
     dispatch(Logout());
+    navigate("/");
   };
 
   return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Logo>
-            {user?.firstName} {user?.lastName}
-          </Logo>
-        </Center>
-        <Right>
-          {user?.id ? (
-            <button onClick={logout}>Logout</button>
-          ) : (
-            <>
-              <MenuItem onClick={() => navigate("/login")}>SIGN IN</MenuItem>
+    <div className="container ">
+      <AppBar position="sticky">
+        <div className="Navbar">
+          <Link to="/" className="nav-logo">
+            <span>Mabench</span>
+          </Link>
+          <div className="nav-items">
+            <div></div>
+            <span>
+              {user?.firstName} {user?.lastName}
+            </span>
+            <span className="divider"></span>
 
-              <MenuItem onClick={() => navigate("/register")}>
-                REGISTER
-              </MenuItem>
-            </>
-          )}
-          <MenuItem>
             <Badge badgeContent={product.length} color="primary">
+              {" "}
+              <ShoppingCartOutlined
+                // onClick={() => navigate("/cart")}
+                onClick={() => setOpen(!open)}
+              />
+            </Badge>
+            <span className="divider"></span>
+
+            {user?.id ? (
+              <button className="logout" onClick={logout}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <button className="login" onClick={() => navigate("/login")}>
+                  Login
+                </button>
+
+                <button onClick={() => navigate("/register")}>Register</button>
+              </>
+            )}
+          </div>
+        </div>
+
+        <nav className="navsmall">
+          {/* <Tooltip title="home">
+            <a
+              href="#home"
+              onClick={() => setActiveNav("#home")}
+              className={activeNav === "#home" ? "active" : ""}
+            >
+              <AiOutlineHome />
+            </a>
+          </Tooltip> */}
+
+          {/* <Tooltip title="about">
+            <a
+              href="#about"
+              onClick={() => setActiveNav("#about")}
+              className={activeNav === "#about" ? "active" : ""}
+            >
+              <BiUserPlus />
+            </a>
+          </Tooltip> */}
+          {/* 
+          <Tooltip title="skills">
+            <a
+              href="#skills"
+              onClick={() => setActiveNav("#skills")}
+              className={activeNav === "#skills" ? "active" : ""}
+            >
+              <BiBookOpen />
+            </a>
+          </Tooltip> */}
+          {/* <Tooltip title="contact">
+            <a
+              href="#contact"
+              onClick={() => setActiveNav("#contact")}
+              className={activeNav === "#contact" ? "active" : ""}
+            >
+              <BiMessageAltDetail />
+            </a>
+          </Tooltip> */}
+          <Tooltip title="cart">
+            <Badge
+              badgeContent={product.length}
+              color="primary"
+              className="navSmallIcons"
+            >
+              {" "}
               <ShoppingCartOutlined onClick={() => navigate("/cart")} />
             </Badge>
-          </MenuItem>
-        </Right>
-      </Wrapper>
-    </Container>
+          </Tooltip>
+          <button style={{ backgroundColor: "red", border: "none" }}>
+            <Switch size="small" />
+          </button>
+        </nav>
+      </AppBar>
+      {open && <Cart />}
+    </div>
   );
 };
 

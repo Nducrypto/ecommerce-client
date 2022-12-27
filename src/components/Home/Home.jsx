@@ -1,7 +1,7 @@
 import React from "react";
 import Categories from "../Categories/Categories";
 import Footer from "../Footer/Footer";
-import Newsletter from "../Newsletter";
+import Newsletter from "../Newsletter/Newsletter";
 import Products from "../Products/Products";
 import Slider from "../Sliders/Slider";
 
@@ -9,8 +9,8 @@ const Home = () => {
   return (
     <div>
       <Slider />
-      <Categories />
       <Products />
+      <Categories />
       <Newsletter />
       <Footer />
     </div>

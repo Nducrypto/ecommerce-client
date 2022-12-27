@@ -21,7 +21,8 @@ const userSlice = createSlice({
       state.error = action.payload;
     },
     Logout: (state) => {
-      state.authData = null;
+      localStorage.clear("userRedux");
+      // state.authData = null;
       state.loading = false;
       state.error = false;
     },

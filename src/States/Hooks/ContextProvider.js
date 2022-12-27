@@ -11,6 +11,7 @@ export const ContextProvider = ({ children }) => {
   const [sort, setSort] = useState("newest");
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [stripeToken, setStripeToken] = useState(null);
 
   return (
     <stateContext.Provider
@@ -24,6 +25,8 @@ export const ContextProvider = ({ children }) => {
         filteredProducts,
         setFilteredProducts,
         cat,
+        stripeToken,
+        setStripeToken,
       }}
     >
       {children}

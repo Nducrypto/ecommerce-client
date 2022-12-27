@@ -1,4 +1,8 @@
-import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import {
+  Delete,
+  // SearchOutlined,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStateContext } from "../../States/Hooks/ContextProvider";
 import { useEffect } from "react";
@@ -7,15 +11,12 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Typography,
   IconButton,
   Grid,
 } from "@mui/material";
-import ShareIcon from "@mui/icons-material/Share";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -77,62 +78,66 @@ const Products = () => {
 
   // const changer = cat ? filteredProducts : products.slice(0, 2);
   const changer = cat ? filteredProducts : products;
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await publicApi.patch(`/products/delete/${id}`);
+      data.filter((p) => p._id !== id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <Grid
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          // justifyContent: "center",
-          // alignItems: "center",
-        }}
-        // container
-        // // alignItems="center"
-        // // spacing={3}
-        container
-        justifyContent="center"
-        alignItems="center"
-        spacing={3}
-      >
-        <Grid item xs={8} sm={4} md={4} lg={3}>
-          {changer?.map((item) => (
-            <Card key={item._id}>
-              <CardHeader
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                title={item.title}
-              />
+    <Grid
+      sx={{ marginTop: "2rem" }}
+      container
+      justifyContent="center"
+      alignItems="center"
+      spacing={1}
+    >
+      {changer?.map((item) => (
+        <Grid item xs={5} sm={2} md={2} lg={2} key={item._id} style={{}}>
+          <Card>
+            <div onClick={() => navigate(`/productDetail/${item._id}`)}>
               <CardMedia
                 component="img"
                 height="150"
                 image={item.image}
                 alt=""
               />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {item.description}
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-                <SearchOutlined
-                  onClick={() => navigate(`/productDetail/${item._id}`)}
+            </div>
+            <CardContent
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {item.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                ${item.price}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleDelete(item._id)}
+              >
+                <Delete />
+                {/* <ShareIcon /> */}
+              </IconButton>
+              {/* <SearchOutlined
+                onClick={() => navigate(`/productDetail/${item._id}`)}
+              /> */}
+              <>
+                <ShoppingCartOutlined
+                  sx={{ float: "right" }}
+                  onClick={() => navigate(`/cart`)}
                 />
-                <ShoppingCartOutlined />
-              </CardActions>
-            </Card>
-          ))}
+              </>
+            </CardActions>
+          </Card>
         </Grid>
-      </Grid>
-    </div>
+      ))}
+    </Grid>
   );
 };
 

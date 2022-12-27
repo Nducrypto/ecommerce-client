@@ -14,8 +14,10 @@ console.log(TOKEN);
 export const publicApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
-export const userApi = axios.create({ baseURL: process.env.REACT_APP_API_URL });
-// headers: { token: `Bearer ${TOKEN}` },
+export const userApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: { token: `Bearer ${TOKEN}` },
+});
 
 export const fetchAll = () => publicApi.get("/products");
 export const create = (form) => userApi.post("/products", form);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+// import { mobile } from "../responsive";
 import { login } from "../States/Actions/authActions";
 
 const Container = styled.div`
@@ -24,7 +24,6 @@ const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
   background-color: white;
-  ${mobile({ width: "75%" })}
 `;
 
 const Title = styled.h1`

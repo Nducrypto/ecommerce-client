@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 // import Home from "./components/Home/Home";
 // import ProductList from "./components/Products/ProductList";
@@ -25,10 +25,13 @@ import {
 import { getAllProducts } from "./States/Actions/ProductAction";
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [dispatch]);
+
+    JSON.parse(localStorage.getItem("userRedux"));
+  }, [dispatch, location]);
 
   return (
     <>
