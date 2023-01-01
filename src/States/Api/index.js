@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const TOKEN = JSON.parse(localStorage.getItem("persist:root"))?.token;
+const TOKEN = JSON.parse(localStorage.getItem("userRedux"))?.token;
 console.log(TOKEN);
 
 // const userReducer = JSON.parse(
@@ -13,6 +13,7 @@ console.log(TOKEN);
 // const TOKEN = true;
 export const publicApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  headers: { token: `Bearer ${TOKEN}` },
 });
 export const userApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

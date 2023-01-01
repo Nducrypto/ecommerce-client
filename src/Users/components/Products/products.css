@@ -1,0 +1,96 @@
+
+.p-container{
+position: relative;
+margin-top: 3rem;
+background-color: bisque;
+}
+
+.p-container .swiper{
+    width: 70%;
+    position: unset;
+}
+    
+
+    
+.p-container .swiper-slide{
+    border-radius: 12px;
+    /* padding: 1rem; */
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+    
+.p-container .swiper-button-prev{
+    left: 7rem;
+    
+    
+}
+.p-container .swiper-button-next{
+    right: 7rem;
+    
+}
+.p-container .swiper-button-next,.p-container .swiper-button-prev{
+    color: red;
+    
+}
+    
+.left-s{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.name{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: .5rem;
+
+}
+ .p-image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 7rem;
+    border-radius: 2rem;
+
+    }
+
+    .p-title{
+        text-align: center;
+        color: black;
+        }
+        .p-price{
+        text-align: center;
+        color:blue;
+        
+        }
+   
+
+@media (max-width: 600px) {
+
+    .p-container .swiper{
+        width: 75%;
+        /* height: 9rem; */
+        position: unset;
+    }
+    .p-container .swiper-button-prev{
+        left: 1.5rem;
+        
+        
+    }
+    .p-container .swiper-button-next{
+        right: 1.5rem;
+        
+    }
+    .name{
+        flex-direction: column;
+    
+    }
+    .p-image{
+   border-radius: .3rem;
+   width: 5rem;
+
+    }
+      
+}

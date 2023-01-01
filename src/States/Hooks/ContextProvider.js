@@ -5,13 +5,14 @@ const stateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const location = useLocation();
-  const cat = location.pathname.split("/")[2];
+  const url = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
 
   const [sort, setSort] = useState("newest");
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [stripeToken, setStripeToken] = useState(null);
+  const [open, setOpen] = useState(false);
 
   return (
     <stateContext.Provider
@@ -24,9 +25,12 @@ export const ContextProvider = ({ children }) => {
         setProducts,
         filteredProducts,
         setFilteredProducts,
-        cat,
+        url,
         stripeToken,
         setStripeToken,
+        open,
+        setOpen,
+        // loading,
       }}
     >
       {children}

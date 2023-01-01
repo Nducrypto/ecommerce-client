@@ -1,0 +1,124 @@
+.overFlowdiv{
+  max-height: 25rem;
+  overflow: auto;
+}
+
+.cart {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 999;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 9px 9px 7px  yellow;
+}
+    h1 {
+      margin-bottom: 10px;
+      color: gray;
+      font-weight: 400;
+      font-size: 24px;
+    }
+  
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+      img {
+        width: 80px;
+        height: 100px;
+        object-fit: cover;
+      }
+  
+ 
+        h1 {
+          font-size: 18px;
+          font-weight: 500;
+        }
+  
+        p {
+          color: gray;
+          font-size: 14px;
+        }
+  
+        .productPrice {
+          margin-top: .2rem;
+          color: blue;
+        }
+  
+      .delete {
+        color: blue;
+        cursor: pointer;
+      }
+  
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 7px;
+      color: black;
+    }
+  
+    .clearCat {
+      float:right ;
+      padding: 0.2rem;
+      cursor: pointer;
+      border: none;
+      background-color: red;
+      color: white;
+      border-radius: .3rem;
+    }
+  
+    .checkout {
+      cursor: pointer;
+      padding: 0.2rem 0.5rem 0.5rem 0.5rem;
+
+      border: none;
+      height: 1.5rem;
+      background-color: red;
+      background-color: #2879fe;
+      color: white;
+      border-radius: .3rem;
+    }
+  .quantityContainer{
+    display: flex;
+    margin-top: 0.5rem;
+  }
+    .increase{
+      color:green;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .quantity{
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      border: 1px solid mediumpurple;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0px 5px;
+      color: black;
+  }
+    .decrease{
+      color:red;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .color{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-top: -0.5rem;
+    }
+
+  @media (max-width: 600px) {
+.cart {
+  width: 65%;
+}
+  }
+  

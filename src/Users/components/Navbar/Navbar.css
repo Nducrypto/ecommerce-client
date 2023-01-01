@@ -1,0 +1,134 @@
+
+  .container {
+    position: sticky;
+    top: 0;
+
+  }
+  .Navbar {
+    height: 50px;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: midnightblue;
+  }
+
+  .navsmall{
+    display: none;
+  }
+  
+  .Navbar > .nav-logo {
+    font-weight: 700;
+    font-size: 21px;
+    margin: 15px;
+    color: white;
+    text-decoration: none;
+
+  }
+  
+  .Navbar > .nav-items > a {
+  background-color: midnightblue;
+    border: none;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 15px;
+    position: relative;
+    opacity: 0.9;
+  }
+  
+  .divider{
+    margin-right: 2rem;
+  }
+  .login{
+    margin-right: 0.5rem;
+  }
+  .logout{
+    margin-right: 0.5rem;
+  }
+
+  .Navbar > .nav-items > a:hover {
+    opacity: 1;
+  }
+  
+  .Navbar > .nav-items > a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: all 0.45s;
+  }
+  
+  .Navbar > .nav-items > a:hover::before {
+    width: 100%;
+  }
+  
+
+  @media (max-width: 700px) {
+    .Navbar{
+      display: flex;
+      height: 50px;
+    width: 100%;
+
+    justify-content: space-between;
+    align-items: center;
+     
+    }
+    
+    .Navbar > .nav-items > a::before {
+        background: transparent;
+    }
+   
+    .navsmall{
+      background: red;
+      width: max-content;
+      padding: 0.2rem 1rem;
+      z-index: 2;
+      position: fixed;
+      left: 50%;
+      transform: translatex(-50%);
+      bottom: 0;
+      /* display: flex; */
+      display: none;
+      gap: 0.8rem;
+      border-radius: 3rem;
+  }
+  
+  .navSmallIcons {
+      background: transparent;
+      color: gold;
+      padding: 0.2rem;
+      border-radius: 50%;
+      display: flex;
+      font-size: 1.1rem;
+  }
+  
+  .navSmallIcons:hover {
+      background: whitesmoke;
+  }
+  
+  .navSmallIcons.active{
+      background: white;
+      color: black;
+  }
+  
+  
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
