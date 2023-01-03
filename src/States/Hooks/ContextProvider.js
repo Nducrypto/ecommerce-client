@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [stripeToken, setStripeToken] = useState(null);
   const [open, setOpen] = useState(false);
+  const [snackBarOpen, setSnackBarOpen] = useState("");
 
   return (
     <stateContext.Provider
@@ -31,6 +32,8 @@ export const ContextProvider = ({ children }) => {
         open,
         setOpen,
         // loading,
+        snackBarOpen,
+        setSnackBarOpen,
       }}
     >
       {children}

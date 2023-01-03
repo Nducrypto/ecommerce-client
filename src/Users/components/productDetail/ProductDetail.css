@@ -53,6 +53,7 @@
 .addContainer{
     width: 50%;
     display: flex;
+    gap: 3rem;
     align-items: center;
     justify-content: space-between;
 }
@@ -75,19 +76,24 @@
 }
 
 .zbutton{
-    /* padding: 15px; */
-    border: 2px solid teal;
-    background-color: white;
-    cursor: pointer;
-    font-weight: 500;
+  border: none;
+  background-color: blue;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2rem;
+
+
 }
 
 .zbutton:hover{
-    background-color: red;
+    background-color: blue;
 
 }
 
 @media (max-width: 600px) {
+  
     .imageContainer{
         flex: 1;
       
@@ -106,7 +112,19 @@
 
       .addContainer{
         width: 100%;
+        flex-direction: column;
+        /* gap: 3rem; */
       
     }
+    .zbutton{
+      /* margin-top: 2rem; */
+      border: none;
+      background-color: blue;
+      padding: 10px;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 2rem;
+  }
     
 }

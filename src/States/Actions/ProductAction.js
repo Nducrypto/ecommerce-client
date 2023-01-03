@@ -5,6 +5,7 @@ import {
   getProductFailure,
   createProduct,
   deleteProduct,
+  updateProduct,
 } from "../Redux/productRedux";
 
 export const getAllProducts = () => async (dispatch) => {
@@ -12,25 +13,34 @@ export const getAllProducts = () => async (dispatch) => {
   try {
     const { data } = await api.fetchAll();
     dispatch(getProductSuccess(data));
+    console.log(data);
   } catch (error) {
-    dispatch(getProductFailure(error.message));
-    console.log(error.message);
+    dispatch(getProductFailure(error.response.data.message));
+    console.log(error.response);
   }
 };
 export const create = (form) => async (dispatch) => {
   try {
     const { data } = await api.create(form);
     dispatch(createProduct(data));
-    console.log(data);
   } catch (error) {
-    console.log(error.message);
+    console.log(error.response.data.message);
   }
 };
 export const deleteItem = (id) => async (dispatch) => {
   try {
     await api.deleteItem(id);
-    dispatch(deleteProduct());
+    dispatch(deleteProduct(id));
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
+  }
+};
+export const updateItem = (id, form) => async (dispatch) => {
+  try {
+    const { data } = await api.updateItem(id, form);
+    console.log(data);
+    dispatch(updateProduct(data));
+  } catch (error) {
+    console.log(error);
   }
 };

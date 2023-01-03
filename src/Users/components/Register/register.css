@@ -1,0 +1,53 @@
+.regContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.regWrapper{
+    width: 40%;
+    padding: 1rem;
+    background-color: tomato ;
+}
+.regTitle{
+    font-size: 24px;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+}
+
+.regForm{
+    display: flex;
+    flex-wrap: wrap;
+}
+.regInput{
+    flex: 1;
+    min-width: 40%;
+    margin: 20px 10px 0px 0px;
+    padding: 5px;
+}
+
+.regAgreement{
+    font-size: 12px;
+  margin: 13px 0px;
+  color: whitesmoke;
+}
+
+.regButton{
+    width: 100%;
+    border: none;
+    padding: 10px 10px;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.account{
+    color: white;
+}
+
+.regLink{
+    text-decoration: none;
+}

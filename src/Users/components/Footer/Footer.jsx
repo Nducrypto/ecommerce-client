@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <div className="footerContainer">
       <div className="center">
-        <div className="title">Useful Links</div>
+        <div className="title">Links</div>
         <div className="socialContainer">
           {links.map((item) => (
             <div key={item.id} className="socialIcon">

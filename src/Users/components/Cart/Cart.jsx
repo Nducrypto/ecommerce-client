@@ -17,8 +17,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./Cart.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStateContext } from "../../../States/Hooks/ContextProvider";
+import CustomizedSnackbar from "../Snackbar/Snackbar";
+
 const Cart = () => {
-  const { stripeToken, setStripeToken, setOpen } = useStateContext();
+  const {
+    stripeToken,
+    setStripeToken,
+    setOpen,
+    setSnackBarOpen,
+    snackBarOpen,
+  } = useStateContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, subTotal } = useSelector((state) => state.cartReducer);
@@ -49,6 +57,22 @@ const Cart = () => {
 
   return (
     <div className="cart">
+      {snackBarOpen === "deleteFromCart" || snackBarOpen === "clearCat" ? (
+        <CustomizedSnackbar
+          message={
+            snackBarOpen === "deleteFromCart"
+              ? "Deleted Successfuly"
+              : snackBarOpen === "clearCat"
+              ? "Cart Cleared Successfully"
+              : null
+          }
+          variant="filled"
+          severity="error"
+          anchorOrigin={{ vertical: "top", horizontal: "left" }}
+          direction="right"
+        />
+      ) : null}
+
       <CloseIcon
         sx={{ color: "white", backgroundColor: "red", borderRadius: "1rem" }}
         onClick={() => setOpen(false)}
@@ -111,7 +135,10 @@ const Cart = () => {
               <DeleteIcon
                 fontSize="small"
                 className="delete"
-                onClick={() => dispatch(deleteFromCart(item))}
+                onClick={() => {
+                  dispatch(deleteFromCart(item));
+                  setSnackBarOpen("deleteFromCart");
+                }}
               />
             </Tooltip>
           </div>
@@ -119,10 +146,16 @@ const Cart = () => {
       </div>
       <div className="total">
         <span>SUBTOTAL</span>
-        <span>${Intl.NumberFormat().format(subTotal)}</span>
+        <span>&#8358;{Intl.NumberFormat().format(subTotal)}</span>
       </div>
 
-      <button className="clearCat" onClick={() => dispatch(clearCart())}>
+      <button
+        className="clearCat"
+        onClick={() => {
+          dispatch(clearCart());
+          setSnackBarOpen("clearCat");
+        }}
+      >
         clearCat
       </button>
 
@@ -146,8 +179,8 @@ const Cart = () => {
           stripeKey={process.env.REACT_APP_STRIPE_KEY}
           token={onToken}
           // email={user.email}
-          // billingAddress
-          // shippingAddress
+          billingAddress
+          shippingAddress
         >
           <button className="checkout">CHECKOUT NOW</button>
         </StripeCheckout>

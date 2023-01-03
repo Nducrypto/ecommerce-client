@@ -16,8 +16,8 @@ const productSlice = createSlice({
       state.products = action.payload;
       state.isLoading = false;
     },
-    getProductFailure: (state) => {
-      state.isError = false;
+    getProductFailure: (state, action) => {
+      state.isError = action.payload;
       state.isLoading = false;
     },
 
@@ -26,8 +26,11 @@ const productSlice = createSlice({
       state.isLoading = false;
     },
     deleteProduct: (state, action) => {
-      state.products = state.products.filter(
-        (p) => p._id !== action.payload._id
+      state.products = state.products.filter((p) => p._id !== action.payload);
+    },
+    updateProduct: (state, action) => {
+      state.products = state.products.map((item) =>
+        item._id === action.payload ? action.payload : item
       );
     },
   },
@@ -39,5 +42,6 @@ export const {
   createProduct,
   getProductFailure,
   deleteProduct,
+  updateProduct,
 } = productSlice.actions;
 export default productSlice.reducer;

@@ -7,13 +7,15 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../States/Redux/cartRedux";
 import { publicApi } from "../../../States/Api";
 import "./ProductDetail.css";
+import { useStateContext } from "../../../States/Hooks/ContextProvider";
+import CustomizedSnackbar from "../Snackbar/Snackbar";
 
 const Product = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-
+  const { setSnackBarOpen, snackBarOpen } = useStateContext();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -42,9 +44,20 @@ const Product = () => {
   const totalPrice = quantity * product.price;
   const handleAddToCart = () => {
     dispatch(addToCart({ ...product, quantity, totalPrice, color, size }));
+    setSnackBarOpen("addToCart");
   };
   return (
     <div>
+      {snackBarOpen === "addToCart" && (
+        <CustomizedSnackbar
+          severity="success"
+          message="Added Successfuly"
+          variant="filled"
+          anchorOrigin={{ vertical: "top", horizontal: "left" }}
+          direction="right"
+        />
+      )}
+
       <div className="wrapper">
         <div className="imageContainer">
           <img alt="" className="productImage" src={product.image} />
@@ -61,7 +74,7 @@ const Product = () => {
               {product.color?.map((c) => (
                 <div
                   className="filterColor"
-                  style={{ backgroundColor: c }}
+                  style={{ backgroundColor: c, marginTop: ".4rem" }}
                   key={c}
                   onClick={() => setColor(c)}
                 />
@@ -73,13 +86,8 @@ const Product = () => {
                 onChange={(e) => setSize(e.target.value)}
                 // onChange={handleSize}
               >
-                {/* {product?.size?.map((s) => (
-                  <option value={s} key={s}>
-                    {s}
-                  </option>
-                ))} */}
                 {product?.size?.map((s) => (
-                  <option>{s}</option>
+                  <option key={s}>{s}</option>
                 ))}
               </select>
             </div>

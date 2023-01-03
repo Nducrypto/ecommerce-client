@@ -43,6 +43,13 @@ const App = () => {
       return <Navigate to="/" />;
     }
   };
+  const LoginProtected = ({ children }) => {
+    if (!user?.id) {
+      return children;
+    } else {
+      return <Navigate to="/" />;
+    }
+  };
 
   return (
     <>
@@ -58,8 +65,22 @@ const App = () => {
           }
         />
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={
+            <LoginProtected>
+              <Login />
+            </LoginProtected>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <LoginProtected>
+              <Register />
+            </LoginProtected>
+          }
+        />
         <Route path="/success" element={<Succes />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/productDetail/:id" element={<ProductDetail />} />

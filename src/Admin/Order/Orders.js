@@ -17,18 +17,20 @@ const Orders = () => {
   }, []);
 
   return (
-    <>
-      {orders.map((p) => (
-        <div key={p._id} style={{ marginTop: "1rem" }}>
-          <div>address :{p.address}</div>
-          <div>amount :{p.amount}</div>
+    <div>
+      <div style={{ fontSize: "2rem", textAlign: "center" }}>Orders</div>
+      <div style={{ display: "flex" }}>
+        {orders.map((p) => (
+          <div key={p._id} style={{ marginTop: "1rem" }}>
+            <div>address :{p.address}</div>
+            <div>&#8358; {Intl.NumberFormat().format(p.amount)}</div>
 
-          <div>userId :{p.userId}</div>
-          <div>status :{p.status}</div>
-          <div>Date :{p.createdAt}</div>
-        </div>
-      ))}
-    </>
+            <div>status :{p.status}</div>
+            <div>{p.createdAt}</div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

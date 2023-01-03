@@ -13,7 +13,6 @@ console.log(TOKEN);
 // const TOKEN = true;
 export const publicApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  headers: { token: `Bearer ${TOKEN}` },
 });
 export const userApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -22,7 +21,9 @@ export const userApi = axios.create({
 
 export const fetchAll = () => publicApi.get("/products");
 export const create = (form) => userApi.post("/products", form);
-export const deleteItem = (id) => userApi.put(`/products/${id}`);
+export const deleteItem = (id) => userApi.patch(`/products/delete/${id}`);
+export const updateItem = (id, form) =>
+  userApi.put(`/products/update/${id}`, form);
 //    =======Auth API=====
 export const login = (formAuth) => publicApi.post("/users/login", formAuth);
 export const register = (formAuth) =>

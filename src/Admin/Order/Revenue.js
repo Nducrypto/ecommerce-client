@@ -19,9 +19,14 @@ const Revenue = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: "2rem" }}>
-      <div style={{ display: "flex", gap: "1rem" }}>
-        <div>Revenue</div>
+    <div
+      style={{
+        marginTop: "2rem",
+        textAlign: "center",
+      }}
+    >
+      <div>
+        <div style={{ fontSize: "2rem" }}>Revenue</div>
         <div>{income[1]?.total}</div>
       </div>
       <div>

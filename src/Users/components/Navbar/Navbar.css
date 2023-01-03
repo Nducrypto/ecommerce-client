@@ -1,5 +1,5 @@
 
-  .container {
+  .navContainer {
     position: sticky;
     top: 0;
 
@@ -85,17 +85,17 @@
    
     .navsmall{
       background: red;
-      width: max-content;
+      /* width: max-content; */
+      width: 50%;
       padding: 0.2rem 1rem;
       z-index: 2;
       position: fixed;
       left: 50%;
       transform: translatex(-50%);
-      bottom: 0;
-      /* display: flex; */
-      display: none;
-      gap: 0.8rem;
-      border-radius: 3rem;
+      bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 1rem;
   }
   
   .navSmallIcons {

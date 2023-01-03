@@ -1,4 +1,4 @@
-import { AppBar, Switch, Badge, Tooltip } from "@mui/material";
+import { AppBar, Badge, Tooltip } from "@mui/material";
 
 import { ShoppingCartOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <AppBar position="sticky">
-      <div className="container ">
+      <div className="navContainer ">
         <div className="Navbar">
           <Link to="/" className="nav-logo">
             <span>Mabench</span>
@@ -36,15 +36,11 @@ const Navbar = () => {
               {user?.firstName} {user?.lastName}
             </span>
 
-            {user?.isAdmin && <a href="/main">main</a>}
             <span className="divider"></span>
 
             <Badge badgeContent={product.length} color="primary">
               {" "}
-              <ShoppingCartOutlined
-                // onClick={() => navigate("/cart")}
-                onClick={() => setOpen(!open)}
-              />
+              <ShoppingCartOutlined onClick={() => setOpen((prev) => !prev)} />
             </Badge>
             <span className="divider"></span>
 
@@ -64,59 +60,22 @@ const Navbar = () => {
           </div>
         </div>
 
-        <nav className="navsmall">
-          {/* <Tooltip title="home">
-            <a
-              href="#home"
-              onClick={() => setActiveNav("#home")}
-              className={activeNav === "#home" ? "active" : ""}
-            >
-              <AiOutlineHome />
+        {user?.isAdmin && (
+          <nav className="navsmall">
+            <a style={{ color: "white", textDecoration: "none" }} href="/main">
+              main
             </a>
-          </Tooltip> */}
 
-          {/* <Tooltip title="about">
-            <a
-              href="#about"
-              onClick={() => setActiveNav("#about")}
-              className={activeNav === "#about" ? "active" : ""}
-            >
-              <BiUserPlus />
-            </a>
-          </Tooltip> */}
-          {/* 
-          <Tooltip title="skills">
-            <a
-              href="#skills"
-              onClick={() => setActiveNav("#skills")}
-              className={activeNav === "#skills" ? "active" : ""}
-            >
-              <BiBookOpen />
-            </a>
-          </Tooltip> */}
-          {/* <Tooltip title="contact">
-            <a
-              href="#contact"
-              onClick={() => setActiveNav("#contact")}
-              className={activeNav === "#contact" ? "active" : ""}
-            >
-              <BiMessageAltDetail />
-            </a>
-          </Tooltip> */}
-          <Tooltip title="cart">
-            <Badge
-              badgeContent={product.length}
-              color="primary"
-              className="navSmallIcons"
-            >
-              {" "}
-              <ShoppingCartOutlined onClick={() => navigate("/cart")} />
-            </Badge>
-          </Tooltip>
-          <button style={{ backgroundColor: "red", border: "none" }}>
-            <Switch size="small" />
-          </button>
-        </nav>
+            <Tooltip title="cart">
+              <Badge badgeContent={product.length} color="primary">
+                {" "}
+                <ShoppingCartOutlined
+                  onClick={() => setOpen((prev) => !prev)}
+                />
+              </Badge>
+            </Tooltip>
+          </nav>
+        )}
         {open && <Cart />}
       </div>
     </AppBar>

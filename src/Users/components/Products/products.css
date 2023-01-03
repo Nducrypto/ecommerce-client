@@ -2,7 +2,6 @@
 .p-container{
 position: relative;
 margin-top: 3rem;
-background-color: bisque;
 }
 
 .p-container .swiper{
@@ -75,12 +74,13 @@ background-color: bisque;
         position: unset;
     }
     .p-container .swiper-button-prev{
-        left: 1.5rem;
+        left: .1rem;
+        /* width: 1rem; */
         
         
     }
     .p-container .swiper-button-next{
-        right: 1.5rem;
+        right: .1rem;
         
     }
     .name{
