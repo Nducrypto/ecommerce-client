@@ -1,8 +1,9 @@
-.catContainer{
+.cateContainer{
     display: flex;
     padding: 20px;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 4rem;
+
 }
 
 .containerTwo{
@@ -42,15 +43,16 @@
   color: gray;
   cursor: pointer;
   font-weight: 600;
+ 
 }
 
 
 @media (max-width: 600px) {
-    .catContainer{
+    .cateContainer{
         display: flex;
         padding: 0px;
         flex-direction: column;
-    margin-top: -.6rem;
+    /* margin-top: -.6rem; */
 
     }
     .image{

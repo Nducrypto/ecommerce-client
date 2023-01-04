@@ -37,10 +37,6 @@ const Product = () => {
     }
   };
 
-  // const handleSize = (e) => {
-  //   setSize(e.target.vale);
-  // };
-
   const totalPrice = quantity * product.price;
   const handleAddToCart = () => {
     dispatch(addToCart({ ...product, quantity, totalPrice, color, size }));
@@ -82,10 +78,7 @@ const Product = () => {
             </div>
             <div className="filter">
               <div className="filterTitle">Size</div>
-              <select
-                onChange={(e) => setSize(e.target.value)}
-                // onChange={handleSize}
-              >
+              <select onChange={(e) => setSize(e.target.value)}>
                 {product?.size?.map((s) => (
                   <option key={s}>{s}</option>
                 ))}

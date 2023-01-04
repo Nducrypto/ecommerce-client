@@ -1,5 +1,5 @@
 .newsletterContainer{  
-  margin-top: 3rem;
+  margin-top: 6rem;
   background-color: #fcf5f5;
   display: flex;
   align-items: center;
@@ -39,6 +39,10 @@ Input{
 }
 
 @media (max-width: 600px) {
+    .newsletterContainer{  
+        margin-top: 4rem;
+      }
+      
     .description{
         text-align: center;
     }

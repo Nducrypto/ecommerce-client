@@ -2,6 +2,10 @@
     background-color: midnightblue;
     color: #fff;
     text-align: center;
+    margin-top: 8rem;
+    border-top-style: solid;
+    border-top-color: red;
+  
   }
   .awards .heading {
     display: flex;
@@ -32,7 +36,7 @@
     color: white;
   }
   .awards p {
-    color: red;
+    color: white;
   }
 
   .content{
@@ -69,7 +73,7 @@
       font-size: 2rem;
     }
     .awards p {
-      color: gold;
+      color: white;
     }
   
     .content{

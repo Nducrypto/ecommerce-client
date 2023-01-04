@@ -6,7 +6,8 @@ import {
   updateItem,
 } from "../../States/Actions/ProductAction";
 import FileBase from "react-file-base64";
-import { Delete } from "@mui/icons-material";
+import { Delete, Update } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
 
 const AllProducts = () => {
   const [form, setForm] = useState({
@@ -16,12 +17,11 @@ const AllProducts = () => {
     color: "",
     categories: "",
     size: "",
+    image: "",
     inStock: true,
   });
-  const [image, setImage] = useState("");
-
-  const [currentId, setCurrentId] = useState();
-  console.log(currentId);
+  console.log(form);
+  const [currentId, setCurrentId] = useState(0);
   const { products } = useSelector((state) => state.productsReducer);
 
   const editProduct = products.find((p) =>
@@ -29,66 +29,73 @@ const AllProducts = () => {
   );
 
   useEffect(() => {
-    if (currentId) {
+    if (editProduct) {
       setForm(editProduct);
     }
-  }, [currentId, editProduct]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
+  }, [editProduct]);
 
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    let color;
-    let size;
     if (currentId) {
-      color = form.color.split(",");
-      size = form.size.split(",");
-      // const categories = form.categories.split(",");
-      dispatch(updateItem(currentId, { ...form, image, color, size }));
+      dispatch(
+        updateItem(currentId, {
+          ...form,
+        })
+      );
     } else {
-      color = form.color.split(",");
-      size = form.size.split(",");
-      // const categories = form.categories.split(",");
-      dispatch(create({ ...form, image, color, size }));
+      dispatch(create({ ...form }));
     }
   };
-  // const handleSubmit = async () => {
-  //   const color = form.color.split(",");
-  //   const size = form.size.split(",");
-  //   // const categories = form.categories.split(",");
-  //   dispatch(create({ ...form, image, color, size }));
-  // };
 
   return (
     <div style={{ marginTop: "1rem" }}>
       <div style={{ textAlign: "center" }}>FORM AND PRODUCT</div>
 
-      <input name="title" placeholder="title" onChange={handleChange} />
       <input
-        name="description"
+        value={form.title}
+        placeholder="title"
+        onChange={(e) => setForm({ ...form, title: e.target.value })}
+      />
+      <input
+        value={form.description}
         placeholder="description"
-        onChange={handleChange}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
-      <input name="price" placeholder="price" onChange={handleChange} />
-      <input name="color" placeholder=" color" onChange={handleChange} />
       <input
-        name="categories"
-        placeholder="categories"
-        onChange={handleChange}
+        value={form.price}
+        placeholder="price"
+        onChange={(e) => setForm({ ...form, price: e.target.value })}
       />
-      <input name="size" placeholder="size" onChange={handleChange} />
-      <select name="inStock" onChange={handleChange}>
-        <option>Yes</option>
-        <option>No</option>
+      <input
+        value={form.color}
+        placeholder="color"
+        onChange={(e) => setForm({ ...form, color: e.target.value.split(",") })}
+      />
+      <input
+        value={form.categories}
+        placeholder="categories"
+        onChange={(e) =>
+          setForm({ ...form, categories: e.target.value.split(",") })
+        }
+      />
+      <input
+        value={form.size}
+        placeholder="size"
+        onChange={(e) => setForm({ ...form, size: e.target.value.split(",") })}
+      />
+      <select
+        value={form.inStock}
+        onChange={(e) => setForm({ ...form, inStock: e.target.value })}
+      >
+        <option value={true}>Yes</option>
+        <option value={false}>No</option>
       </select>
+
       <FileBase
         type="file"
         multiple={false}
-        onDone={({ base64 }) => setImage(base64)}
+        onDone={({ base64 }) => setForm({ ...form, image: base64 })}
       />
 
       <button onClick={handleSubmit}>submit</button>
@@ -112,6 +119,7 @@ const AllProducts = () => {
             >
               {p.color.map((c) => (
                 <div
+                  key={c}
                   style={{
                     backgroundColor: c,
                     width: "20px",
@@ -125,18 +133,22 @@ const AllProducts = () => {
               ))}
             </div>
 
-            <div>{p.descripon}</div>
             <div>{p.title}</div>
-            <div> {p.inStock === true ? <>InStock</> : <>OutOfStock</>}</div>
+            <div>{p.description}</div>
+            <div> {p.inStock ? <>InStock</> : <>OutOfStock</>}</div>
             <div>&#8358; {Intl.NumberFormat().format(p.price)}</div>
-            <Delete
-              onClick={() => dispatch(deleteItem(p._id))}
-              sx={{ color: "red" }}
-            />
-            <Delete
-              onClick={() => setCurrentId(p._id)}
-              sx={{ color: "blue" }}
-            />
+            <div style={{ display: "flex", gap: "2rem" }}>
+              <Tooltip title="update">
+                <Delete
+                  onClick={() => dispatch(deleteItem(p._id))}
+                  sx={{ color: "red" }}
+                />
+              </Tooltip>
+
+              <Tooltip title="update">
+                <Update onClick={() => setCurrentId(p._id)} />
+              </Tooltip>
+            </div>
           </div>
         ))}
       </div>

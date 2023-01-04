@@ -16,7 +16,6 @@ import {
   ProductList,
   Register,
   Login,
-  Cart,
   Navbar,
   Announcement,
   Succes,
@@ -82,7 +81,6 @@ const App = () => {
           }
         />
         <Route path="/success" element={<Succes />} />
-        <Route path="/cart" element={<Cart />} />
         <Route path="/productDetail/:id" element={<ProductDetail />} />
         <Route path="/productlist/:category" element={<ProductList />} />
         <Route path="*" element={<Navigate to="/" />} />

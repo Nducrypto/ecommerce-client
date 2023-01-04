@@ -3,7 +3,7 @@ import { publicApi } from "../../States/Api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-
+  // console.log(orders);
   // ====GET ORDERS
   useEffect(() => {
     const getOrders = async () => {

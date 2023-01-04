@@ -29,7 +29,7 @@ const Orders = () => {
         data.map((item) =>
           setUserStats((prev) => [
             ...prev,
-            { name: MONTHS[item._id - 1], "Active User": item.total },
+            { month: MONTHS[item._id - 1], activeUsers: item.total },
           ])
         );
       } catch (error) {}
@@ -42,8 +42,10 @@ const Orders = () => {
       <div style={{ textAlign: "center", fontSize: "2rem" }}>USERSTATS</div>
       {userStats.map((p) => (
         <div key={p.id} style={{ textAlign: "center" }}>
-          <h1>{p.name}</h1>
-          <h1>{p.amount}</h1>
+          <div style={{ fontSize: "1.3rem" }}>{p.month}</div>
+          <div style={{ fontSize: "1.3rem" }}>
+            ActiveUsers : {p.activeUsers}
+          </div>
         </div>
       ))}
     </div>

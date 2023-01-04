@@ -30,7 +30,7 @@ const productSlice = createSlice({
     },
     updateProduct: (state, action) => {
       state.products = state.products.map((item) =>
-        item._id === action.payload ? action.payload : item
+        item._id === action.payload._id ? action.payload : item
       );
     },
   },

@@ -4,11 +4,16 @@ import "./categories.css";
 
 const Categories = () => {
   return (
-    <div className="catContainer">
+    <div className="cateContainer">
       {popularProducts.map((item) => (
         <div className="containerTwo" key={item.id}>
           <Link to={`/productlist/${item.category}`}>
-            <img className="catImage" src={item.img} alt="" />
+            <img
+              className="catImage"
+              style={{ borderRadius: item.id === 6 && "4rem" }}
+              src={item.img}
+              alt=""
+            />
             <div className="info">
               <h1 className="title">{item.title}</h1>
               <button className="catButton">SHOP NOW</button>
