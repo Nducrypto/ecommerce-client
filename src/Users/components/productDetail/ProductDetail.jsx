@@ -8,14 +8,13 @@ import { addToCart } from "../../../States/Redux/cartRedux";
 import { publicApi } from "../../../States/Api";
 import "./ProductDetail.css";
 import { useStateContext } from "../../../States/Hooks/ContextProvider";
-import CustomizedSnackbar from "../Snackbar/Snackbar";
 
 const Product = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const { setSnackBarOpen, snackBarOpen } = useStateContext();
+  const { setSnackBarOpen } = useStateContext();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -44,16 +43,6 @@ const Product = () => {
   };
   return (
     <div>
-      {snackBarOpen === "addToCart" && (
-        <CustomizedSnackbar
-          severity="success"
-          message="Added Successfuly"
-          variant="filled"
-          anchorOrigin={{ vertical: "top", horizontal: "left" }}
-          direction="right"
-        />
-      )}
-
       <div className="wrapper">
         <div className="imageContainer">
           <img alt="" className="productImage" src={product.image} />

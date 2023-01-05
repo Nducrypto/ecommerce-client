@@ -49,7 +49,7 @@ import WestOutlinedIcon from "@mui/icons-material/WestOutlined";
 import "./Slider.css";
 import { sliderItems } from "../../../data";
 
-const Sidebar = () => {
+const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
 
   const prevSlide = () => {
@@ -84,6 +84,7 @@ const Sidebar = () => {
       <div className="container-dots">
         {Array.from({ length: 10 }).map((item, index) => (
           <div
+            key={item}
             onClick={() => moveDot(index + 1)}
             className={currentSlide === index + 1 ? "dot active" : "dot"}
           ></div>
@@ -93,4 +94,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Slider;

@@ -17,16 +17,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./Cart.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStateContext } from "../../../States/Hooks/ContextProvider";
-import CustomizedSnackbar from "../Snackbar/Snackbar";
 
 const Cart = () => {
-  const {
-    stripeToken,
-    setStripeToken,
-    setOpen,
-    setSnackBarOpen,
-    snackBarOpen,
-  } = useStateContext();
+  const { stripeToken, setStripeToken, setOpen, setSnackBarOpen } =
+    useStateContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, subTotal } = useSelector((state) => state.cartReducer);
@@ -57,22 +51,6 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      {snackBarOpen === "deleteFromCart" || snackBarOpen === "clearCat" ? (
-        <CustomizedSnackbar
-          message={
-            snackBarOpen === "deleteFromCart"
-              ? "Deleted Successfuly"
-              : snackBarOpen === "clearCat"
-              ? "Cart Cleared Successfully"
-              : null
-          }
-          variant="filled"
-          severity="error"
-          anchorOrigin={{ vertical: "top", horizontal: "left" }}
-          direction="right"
-        />
-      ) : null}
-
       <CloseIcon
         sx={{ color: "white", backgroundColor: "red", borderRadius: "1rem" }}
         onClick={() => setOpen(false)}
@@ -150,11 +128,12 @@ const Cart = () => {
       </div>
 
       <button
-        className="clearCat"
+        className={!product.length ? "disabledButton" : "clearCat"}
         onClick={() => {
           dispatch(clearCart());
           setSnackBarOpen("clearCat");
         }}
+        disabled={!product.length}
       >
         clearCat
       </button>

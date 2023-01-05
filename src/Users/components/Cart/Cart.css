@@ -62,6 +62,15 @@
       color: black;
     }
   
+    .disabledButton {
+      float:right ;
+      padding: 0.2rem;
+      cursor: pointer;
+      border-radius: .3rem;
+      border: none;
+
+    }
+  
     .clearCat {
       float:right ;
       padding: 0.2rem;

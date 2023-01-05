@@ -22,6 +22,7 @@ import {
   Main,
 } from "./Users/components";
 import { getAllProducts } from "./States/Actions/ProductAction";
+import CustomizedSnackbar from "./Users/components/Snackbar/Snackbar";
 
 const App = () => {
   const location = useLocation();
@@ -54,6 +55,7 @@ const App = () => {
     <>
       <Announcement />
       <Navbar />
+      <CustomizedSnackbar />
       <Routes>
         <Route
           path="/main"
