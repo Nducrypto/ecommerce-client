@@ -75,14 +75,14 @@ const Products = () => {
         <h1 style={{ textAlign: "center", fontSize: "2rem" }}>Out Of Stock</h1>
       ) : (
         <Swiper
-          slidesPerView={3}
-          spaceBetween={30}
+          slidesPerView={2}
+          spaceBetween={10}
           modules={[Pagination, Navigation]}
           // className="mySwiper"
           loopFillGroupWithBlank={true}
           slidesPerGroup={1}
           loop={true}
-          navigation={true}
+          navigation={url ? false : true}
         >
           {changer?.map((item) => (
             <SwiperSlide key={item._id}>
@@ -90,7 +90,13 @@ const Products = () => {
                 className="p-imgDiv"
                 onClick={() => navigate(`/productDetail/${item._id}`)}
               >
-                <img className="p-image" src={item.image} alt="" />
+                <img
+                  className={
+                    item.title === "Watch" ? "p-watch-image" : "p-image"
+                  }
+                  src={item.image}
+                  alt=""
+                />
               </div>
               <div className="left-s">
                 <div className="name">

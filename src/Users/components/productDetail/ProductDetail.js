@@ -12,7 +12,8 @@ import { useStateContext } from "../../../States/Hooks/ContextProvider";
 const Product = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState([]);
+  const [open, setOpen] = useState(false);
   const [size, setSize] = useState("");
   const { setSnackBarOpen } = useStateContext();
   const { id } = useParams();
@@ -41,6 +42,12 @@ const Product = () => {
     dispatch(addToCart({ ...product, quantity, totalPrice, color, size }));
     setSnackBarOpen("addToCart");
   };
+
+  const handleSetColor = (c) => {
+    const check = color?.find((p) => p === c);
+
+    setColor(check ? color?.filter((item) => item !== check) : [...color, c]);
+  };
   return (
     <div>
       <div className="wrapper">
@@ -61,24 +68,54 @@ const Product = () => {
                   className="filterColor"
                   style={{ backgroundColor: c, marginTop: ".4rem" }}
                   key={c}
-                  onClick={() => setColor(c)}
+                  onClick={() => {
+                    handleSetColor(c);
+                  }}
                 />
               ))}
             </div>
             <div className="filter">
               <div className="filterTitle">Size</div>
-              <select onChange={(e) => setSize(e.target.value)}>
+              <select value={size} onChange={(e) => setSize(e.target.value)}>
+                <option hidden>-Select-</option>
+
                 {product?.size?.map((s) => (
                   <option key={s}>{s}</option>
                 ))}
               </select>
             </div>
           </div>
+
           <div className="addContainer">
             <div className="amountContainer">
               <Remove onClick={() => handleQuantity("dec")} />
               <div className="amount">{quantity}</div>
               <Add onClick={() => handleQuantity("inc")} />
+            </div>
+            {/* Notifyin Color Selected By user */}
+            <div
+              className="colorCountContainer"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              {!open ? (
+                <>
+                  <span className="colorCount"> {color.length}</span>
+                  <span style={{ marginTop: ".1rem" }}>
+                    {color.length > 1 ? "Colors" : "Color"} Selected
+                  </span>
+                </>
+              ) : null}
+              {open && (
+                <div className="openColor">
+                  {color.map((s, i) => (
+                    <div
+                      key={i}
+                      className="filterColor"
+                      style={{ backgroundColor: s }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <button className="zbutton" onClick={handleAddToCart}>
               ADD TO CART

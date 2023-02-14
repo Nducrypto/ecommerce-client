@@ -13,9 +13,17 @@ const cartSlice = createSlice({
         (item) => item._id === action.payload._id
       );
       if (item) {
+        const { color, size } = item;
         item.quantity += action.payload.quantity;
-        item.color = action.payload.color;
-        item.size = action.payload.size;
+
+        action.payload.color.length
+          ? (item.color = action.payload.color)
+          : (item.color = color);
+
+        action.payload.size.length
+          ? (item.size = action.payload.size)
+          : (item.size = size);
+
         item.totalPrice += action.payload.totalPrice;
       } else {
         state.product.push(action.payload);

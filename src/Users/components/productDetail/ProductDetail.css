@@ -9,7 +9,7 @@
 }
 .productImage{
     width: 100%;
-    height: 90vh;
+    height: auto;
     object-fit: cover;
 }
 .productInfo{
@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 .addContainer{
-    width: 50%;
+    width: 100%;
     display: flex;
     gap: 3rem;
     align-items: center;
@@ -68,28 +68,61 @@
     width: 30px;
     height: 30px;
     border-radius: 10px;
-    border: 1px solid teal;
+    border: 1px solid ;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0px 5px;
 }
+.colorCount{
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+    border: 1px solid ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.colorCountContainer{
+display: flex;
+cursor: pointer;
+gap: .4rem;
+}
+.colorCountContainertwo{
+display: flex;
+flex-direction: column;
+/* gap: .4rem; */
 
+}
+.openColor{
+  display: flex;
+  gap: -1rem;
+  width: max-content;
+}
 .zbutton{
   border: none;
   background-color: blue;
   padding: 10px;
   color: white;
   cursor: pointer;
-  width: 100%;
+  width: 40%;
   border-radius: 2rem;
-
 
 }
 
 .zbutton:hover{
     background-color: blue;
 
+}
+
+@media (max-width: 810px) {
+  .productImage{
+    /* width: 35vw; */
+    width: 100%;
+    height: 35vh;
+    object-fit: cover;
+}
+    
 }
 
 @media (max-width: 600px) {
@@ -126,5 +159,7 @@
       width: 100%;
       border-radius: 2rem;
   }
-    
+  .openColor{
+    margin-top: -0.6rem;
+  }
 }

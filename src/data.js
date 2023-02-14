@@ -14,7 +14,6 @@ import womanfour from "./assets/womanfour.jpg";
 import manfour from "./assets/manfour.jpg";
 import purse from "./assets/purse.jpg";
 import watch from "./assets/watch.jpg";
-import shoeshirt from "./assets/shoeshirt.jpg";
 
 export const sliderItems = [
   {
@@ -92,13 +91,6 @@ export const popularProducts = [
     id: 5,
     img: "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
     category: "Bag",
-  },
-  {
-    id: 6,
-    img: shoeshirt,
-    category: "Shoe",
-
-    // "https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
   },
 
   {

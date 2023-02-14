@@ -24,7 +24,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, subTotal } = useSelector((state) => state.cartReducer);
-
+  console.log(product);
   const user = JSON.parse(localStorage.getItem("userRedux"));
 
   const onToken = (token) => {
@@ -83,12 +83,21 @@ const Cart = () => {
                 {item.size}
               </div>
               <div
-                className="color"
                 style={{
-                  backgroundColor: item.color,
-                  marginTop: ".3rem",
+                  display: "flex",
+                  gap: "0.5rem",
                 }}
-              />
+              >
+                {item?.color?.map((p) => (
+                  <div
+                    className="color"
+                    style={{
+                      backgroundColor: p,
+                      marginTop: ".3rem",
+                    }}
+                  />
+                ))}
+              </div>
 
               <div className="quantityContainer">
                 <Add

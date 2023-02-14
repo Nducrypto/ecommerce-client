@@ -30,6 +30,20 @@ const App = () => {
 
   const user = JSON.parse(localStorage.getItem("userRedux"));
 
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+    useEffect(() => {
+      const cantControlScrollRestoration =
+        "scrollRestoration" in window.history;
+      if (cantControlScrollRestoration) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    // return children;
+  };
+
   useEffect(() => {
     dispatch(getAllProducts());
 
@@ -53,6 +67,7 @@ const App = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Announcement />
       <Navbar />
       <CustomizedSnackbar />
