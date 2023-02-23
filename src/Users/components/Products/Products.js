@@ -22,8 +22,6 @@ const Products = () => {
     sort,
     url,
     filters,
-    // setLoading,
-    // loading,
   } = useStateContext();
 
   // ========PRODUCTS And FILTEREDPRODUCt USEEFFECT

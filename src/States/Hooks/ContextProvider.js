@@ -31,7 +31,6 @@ export const ContextProvider = ({ children }) => {
         setStripeToken,
         open,
         setOpen,
-        // loading,
         snackBarOpen,
         setSnackBarOpen,
       }}
