@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +11,7 @@ const Login = () => {
     password: "",
   });
 
-  const { loading } = useSelector((state) => state.userReducer);
+  const { loading, error } = useSelector((state) => state.userReducer);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -24,6 +25,7 @@ const Login = () => {
   return (
     <div className="loginContainer">
       <div className="loginWrapper">
+        <h1 className="loginTitle">{error}</h1>
         <h1 className="loginTitle">SIGN IN</h1>
         <form className="form">
           <input
@@ -39,13 +41,13 @@ const Login = () => {
             name="password"
             onChange={handleChange}
           />
-          <button
-            className="loginButton"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            LOGIN
-          </button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <button className="loginButton" onClick={handleSubmit}>
+              LOGIN
+            </button>
+          )}
           <div style={{ color: "white" }}>
             DON'T HAVE AN ACCOUNT ? {""}
             <a className="link" href="/register">

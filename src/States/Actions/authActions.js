@@ -10,8 +10,7 @@ export const SignIn = (formAuth, navigate) => async (dispatch) => {
 
     navigate("/");
   } catch (error) {
-    dispatch(loginFailure(error.message));
-    console.log(error.message);
+    dispatch(loginFailure(error.response.data.message));
   }
 };
 
@@ -23,8 +22,6 @@ export const register = (formAuth, navigate) => async (dispatch) => {
 
     navigate("/");
   } catch (error) {
-    dispatch(loginFailure(error));
-
-    console.log(error);
+    dispatch(loginFailure(error.response.data.message));
   }
 };
