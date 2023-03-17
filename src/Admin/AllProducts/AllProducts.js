@@ -5,7 +5,6 @@ import {
   deleteItem,
   updateItem,
 } from "../../States/Actions/ProductAction";
-import FileBase from "react-file-base64";
 import { Delete, Update } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 
@@ -19,6 +18,7 @@ const AllProducts = () => {
     size: "",
     image: "",
     inStock: true,
+    rating: "",
   });
   console.log(form);
   const [currentId, setCurrentId] = useState(0);
@@ -65,7 +65,12 @@ const AllProducts = () => {
       <input
         value={form.price}
         placeholder="price"
-        onChange={(e) => setForm({ ...form, price: e.target.value })}
+        onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
+      />
+      <input
+        value={form.rating}
+        placeholder="rating"
+        onChange={(e) => setForm({ ...form, rating: Number(e.target.value) })}
       />
       <input
         value={form.color}
@@ -75,9 +80,7 @@ const AllProducts = () => {
       <input
         value={form.categories}
         placeholder="categories"
-        onChange={(e) =>
-          setForm({ ...form, categories: e.target.value.split(",") })
-        }
+        onChange={(e) => setForm({ ...form, categories: e.target.value })}
       />
       <input
         value={form.size}
@@ -91,12 +94,6 @@ const AllProducts = () => {
         <option value={true}>Yes</option>
         <option value={false}>No</option>
       </select>
-
-      <FileBase
-        type="file"
-        multiple={false}
-        onDone={({ base64 }) => setForm({ ...form, image: base64 })}
-      />
 
       <button onClick={handleSubmit}>submit</button>
 

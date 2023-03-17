@@ -17,7 +17,7 @@ const Slider = () => {
       {sliderItems.map((item, index) => {
         return (
           <div
-            key={index.id}
+            key={index}
             className={
               currentSlide === index + 1 ? "slide active-anim" : "slide"
             }

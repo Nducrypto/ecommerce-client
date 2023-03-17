@@ -1,114 +1,96 @@
 import { useNavigate } from "react-router-dom";
-import { useStateContext } from "../../../States/Hooks/ContextProvider";
-import { useEffect } from "react";
-import { publicApi } from "../../../States/Api";
 
 import "./products.css";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
+import useFetch from "../../../States/Hooks/useFetch";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  CardActions,
+  Grid,
+  CardHeader,
+  Rating,
+  CircularProgress,
+} from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
 const Products = () => {
   const navigate = useNavigate();
 
-  const {
-    setProducts,
-    products,
-    setFilteredProducts,
-    filteredProducts,
-    sort,
-    url,
-    filters,
-  } = useStateContext();
+  const { products, isLoading, url } = useFetch("/products");
 
-  // ========PRODUCTS And FILTEREDPRODUCt USEEFFECT
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const { data } = await publicApi.get("/products");
-        setProducts(data);
-      } catch (error) {
-        // console.log(error);
-      }
-    };
-    if (url) {
-      setFilteredProducts(
-        products.filter((item) => item.title === url),
-        products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        )
-      );
-    }
-    getProducts();
-  }, [url, products, setFilteredProducts, setProducts, filters]);
-
-  // ========SORT USEEFFECT
-  useEffect(() => {
-    if (sort === "newest") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
-      );
-    } else if (sort === "high") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
-    } else {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
-    }
-  }, [sort, setFilteredProducts]);
-
-  // const changer = cat ? filteredProducts : products.slice(0, 2);
-  const changer = url ? filteredProducts : products;
+  const changer = url
+    ? products?.filter((item) => item.title === url)
+    : products;
 
   return (
     <div className="p-container">
-      {url && !changer.length ? (
-        <h1 style={{ textAlign: "center", fontSize: "2rem" }}>Out Of Stock</h1>
-      ) : (
-        <Swiper
-          slidesPerView={2}
-          spaceBetween={10}
-          modules={[Pagination, Navigation]}
-          // className="mySwiper"
-          loopFillGroupWithBlank={true}
-          slidesPerGroup={1}
-          loop={true}
-          navigation={url ? false : true}
-        >
-          {changer?.map((item) => (
-            <SwiperSlide key={item._id}>
-              <div
-                className="p-imgDiv"
-                onClick={() => navigate(`/productDetail/${item._id}`)}
-              >
-                <img
-                  className={
-                    item.title === "Watch" ? "p-watch-image" : "p-image"
-                  }
-                  src={item.image}
-                  alt=""
-                />
-              </div>
-              <div className="left-s">
-                <div className="name">
-                  <div className="p-title">{item.title}</div>
+      {isLoading && <CircularProgress sx={{ fontSize: "4rem" }} />}
 
-                  <div className="p-price">
-                    &#8358; {Intl.NumberFormat().format(item.price)}
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      )}
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        {changer?.map((item) => (
+          <Grid item xs={12} sm={3} md={2} key={item._id}>
+            {/* <span className="freedelivery">free delivery</span> */}
+
+            <Card
+              sx={{
+                cursor: "pointer",
+                borderRadius: "0.5rem",
+                boxShadow: "0.5rem 0.2rem 0.4rem grey",
+                "&:hover": {
+                  transform: "scale(1.04)",
+                },
+              }}
+              onClick={() => navigate(`/productDetail/${item._id}`)}
+            >
+              <CardHeader
+                sx={{
+                  position: "absolute",
+                  fontSize: "0.9rem",
+                  marginTop: ".3rem",
+                  marginLeft: "1%",
+                  backgroundColor:
+                    item.title === "Bluetooth" || item.title === "T-shirt"
+                      ? ""
+                      : "orange",
+                  color: "white",
+                  height: "0.1rem",
+                }}
+                action={
+                  <>
+                    {item.title === "Bluetooth" || item.title === "T-shirt" ? (
+                      ""
+                    ) : (
+                      <>Free Delivery</>
+                    )}
+                  </>
+                }
+              />
+              <CardMedia sx={{ height: 200 }} image={item.image} title="" />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {item.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  &#8358; {Intl.NumberFormat().format(item.price)}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Rating
+                  name="text-feedback"
+                  value={item.rating}
+                  readOnly
+                  precision={item.rating}
+                  emptyIcon={
+                    <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                  }
+                />
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

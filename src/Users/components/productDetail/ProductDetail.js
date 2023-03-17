@@ -1,33 +1,26 @@
 import { Add, Remove } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Newsletter from "../Newsletter/Newsletter";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../States/Redux/cartRedux";
-import { publicApi } from "../../../States/Api";
+
 import "./ProductDetail.css";
 import { useStateContext } from "../../../States/Hooks/ContextProvider";
+import useFetch from "../../../States/Hooks/useFetch";
 
 const Product = () => {
-  const [product, setProduct] = useState({});
+  const { id } = useParams();
+
+  const { products } = useFetch(`/products/${id}`);
+  console.log(products);
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState([]);
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState("");
   const { setSnackBarOpen } = useStateContext();
-  const { id } = useParams();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const { data } = await publicApi.get("/products/" + id);
-        setProduct(data);
-      } catch (error) {}
-    };
-    getProduct();
-  }, [id]);
 
   const handleQuantity = (type) => {
     if (type === "inc") {
@@ -37,9 +30,9 @@ const Product = () => {
     }
   };
 
-  const totalPrice = quantity * product.price;
+  const totalPrice = quantity * products.price;
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, quantity, totalPrice, color, size }));
+    dispatch(addToCart({ ...products, quantity, totalPrice, color, size }));
     setSnackBarOpen("addToCart");
   };
 
@@ -52,18 +45,18 @@ const Product = () => {
     <div>
       <div className="wrapper">
         <div className="imageContainer">
-          <img alt="" className="productImage" src={product.image} />
+          <img alt="" className="productImage" src={products.image} />
         </div>
         <div className="productInfo">
-          <div className="title">{product.title}</div>
-          <div className="description">{product.description}</div>
+          <div className="title">{products.title}</div>
+          <div className="description">{products.description}</div>
           <span className="price">
-            &#8358; {Intl.NumberFormat().format(product.price)}
+            &#8358; {Intl.NumberFormat().format(products.price)}
           </span>
           <div className="filteredcontainer">
             <div className="filter">
               <div className="filterTitle">Color</div>
-              {product.color?.map((c) => (
+              {products.color?.map((c) => (
                 <div
                   className="filterColor"
                   style={{ backgroundColor: c, marginTop: ".4rem" }}
@@ -79,7 +72,7 @@ const Product = () => {
               <select value={size} onChange={(e) => setSize(e.target.value)}>
                 <option hidden>-Select-</option>
 
-                {product?.size?.map((s) => (
+                {products?.size?.map((s) => (
                   <option key={s}>{s}</option>
                 ))}
               </select>

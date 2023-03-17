@@ -2,11 +2,14 @@ import Newsletter from "../Newsletter/Newsletter";
 import Footer from "../Footer/Footer";
 import Products from "../Products/Products";
 
-import { useStateContext } from "../../../States/Hooks/ContextProvider";
 import "./productList.css";
+import useFetch from "../../../States/Hooks/useFetch";
+import { useLocation } from "react-router-dom";
 
 const ProductList = () => {
-  const { filters, setFilters, setSort, cat } = useStateContext();
+  const location = useLocation();
+  const url = location.pathname.split("/")[2];
+  const { filters, setFilters, setSort } = useFetch(`/product/${url}`);
 
   const handleFilters = (e) => {
     const { name, value } = e.target;
@@ -15,7 +18,7 @@ const ProductList = () => {
 
   return (
     <div className="productListContainer">
-      <div className="productTitle">{cat}</div>
+      <div className="productTitle">{url}</div>
 
       <div className="filterContainer">
         <div className="filter">

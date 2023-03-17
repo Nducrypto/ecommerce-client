@@ -17,44 +17,34 @@ import watch from "./assets/watch.jpg";
 
 export const sliderItems = [
   {
-    id: 1,
     img: manone,
   },
   {
-    id: 2,
     img: purse,
   },
 
   {
-    id: 3,
     img: womanone,
   },
   {
-    id: 4,
     img: watch,
   },
   {
-    id: 5,
     img: mantwo,
   },
   {
-    id: 6,
     img: womantwo,
   },
   {
-    id: 7,
     img: manthree,
   },
   {
-    id: 8,
     img: womanthree,
   },
   {
-    id: 9,
     img: manfour,
   },
   {
-    id: 10,
     img: womanfour,
   },
 ];

@@ -1,7 +1,7 @@
 import * as api from "../Api/index";
 import { loginFailure, loginStart, loginSuccess } from "../Redux/userRedux";
 
-export const login = (formAuth, navigate) => async (dispatch) => {
+export const SignIn = (formAuth, navigate) => async (dispatch) => {
   dispatch(loginStart());
 
   try {
