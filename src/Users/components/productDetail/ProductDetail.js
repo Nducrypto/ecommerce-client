@@ -1,6 +1,7 @@
 import { Add, Remove } from "@mui/icons-material";
+import { Rating } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Newsletter from "../Newsletter/Newsletter";
 import { useDispatch } from "react-redux";
@@ -9,12 +10,13 @@ import { addToCart } from "../../../States/Redux/cartRedux";
 import "./ProductDetail.css";
 import { useStateContext } from "../../../States/Hooks/ContextProvider";
 import useFetch from "../../../States/Hooks/useFetch";
+import Products from "../Products/Products";
 
 const Product = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.state.id;
+  const { products, isLoading } = useFetch(`/products/${id}`);
 
-  const { products } = useFetch(`/products/${id}`);
-  console.log(products);
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState([]);
   const [open, setOpen] = useState(false);
@@ -43,79 +45,91 @@ const Product = () => {
   };
   return (
     <div>
-      <div className="wrapper">
-        <div className="imageContainer">
-          <img alt="" className="productImage" src={products.image} />
-        </div>
-        <div className="productInfo">
-          <div className="title">{products.title}</div>
-          <div className="description">{products.description}</div>
-          <span className="price">
-            &#8358; {Intl.NumberFormat().format(products.price)}
-          </span>
-          <div className="filteredcontainer">
-            <div className="filter">
-              <div className="filterTitle">Color</div>
-              {products.color?.map((c) => (
-                <div
-                  className="filterColor"
-                  style={{ backgroundColor: c, marginTop: ".4rem" }}
-                  key={c}
-                  onClick={() => {
-                    handleSetColor(c);
-                  }}
-                />
-              ))}
+      {isLoading ? null : (
+        <div className="wrapper">
+          <div className="imageContainer">
+            <img alt="" className="productImage" src={products.image} />
+          </div>
+          <div className="productInfo">
+            <div className="title">{products.title}</div>
+            <div className="description">{products.description}</div>
+            <div>
+              <Rating
+                value={Number(products?.rating)}
+                readOnly
+                precision={Number(products?.rating)}
+              />
             </div>
-            <div className="filter">
-              <div className="filterTitle">Size</div>
-              <select value={size} onChange={(e) => setSize(e.target.value)}>
-                <option hidden>-Select-</option>
 
-                {products?.size?.map((s) => (
-                  <option key={s}>{s}</option>
+            <span className="price">
+              &#8358; {Intl.NumberFormat().format(products.price)}
+            </span>
+            <div className="filteredcontainer">
+              <div className="filter">
+                <div className="filterTitle">Color</div>
+                {products.color?.map((c) => (
+                  <div
+                    className="filterColor"
+                    style={{ backgroundColor: c, marginTop: ".4rem" }}
+                    key={c}
+                    onClick={() => {
+                      handleSetColor(c);
+                    }}
+                  />
                 ))}
-              </select>
-            </div>
-          </div>
+              </div>
+              <div className="filter">
+                <div className="filterTitle">Size</div>
+                <select value={size} onChange={(e) => setSize(e.target.value)}>
+                  <option hidden>-Select-</option>
 
-          <div className="addContainer">
-            <div className="amountContainer">
-              <Remove onClick={() => handleQuantity("dec")} />
-              <div className="amount">{quantity}</div>
-              <Add onClick={() => handleQuantity("inc")} />
-            </div>
-            {/* Notifyin Color Selected By user */}
-            <div
-              className="colorCountContainer"
-              onClick={() => setOpen((prev) => !prev)}
-            >
-              {!open ? (
-                <>
-                  <span className="colorCount"> {color.length}</span>
-                  <span style={{ marginTop: ".1rem" }}>
-                    {color.length > 1 ? "Colors" : "Color"} Selected
-                  </span>
-                </>
-              ) : null}
-              {open && (
-                <div className="openColor">
-                  {color.map((s, i) => (
-                    <div
-                      key={i}
-                      className="filterColor"
-                      style={{ backgroundColor: s }}
-                    />
+                  {products?.size?.map((s) => (
+                    <option key={s}>{s}</option>
                   ))}
-                </div>
-              )}
+                </select>
+              </div>
             </div>
-            <button className="zbutton" onClick={handleAddToCart}>
-              ADD TO CART
-            </button>
+
+            <div className="addContainer">
+              <div className="amountContainer">
+                <Remove onClick={() => handleQuantity("dec")} />
+                <div className="amount">{quantity}</div>
+                <Add onClick={() => handleQuantity("inc")} />
+              </div>
+              {/* Notifyin Color Selected By user */}
+              <div
+                className="colorCountContainer"
+                onClick={() => setOpen((prev) => !prev)}
+              >
+                {!open ? (
+                  <>
+                    <span className="colorCount"> {color.length}</span>
+                    <span style={{ marginTop: ".1rem" }}>
+                      {color.length > 1 ? "Colors" : "Color"} Selected
+                    </span>
+                  </>
+                ) : null}
+                {open && (
+                  <div className="openColor">
+                    {color.map((s, i) => (
+                      <div
+                        key={i}
+                        className="filterColor"
+                        style={{ backgroundColor: s }}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button className="zbutton" onClick={handleAddToCart}>
+                ADD TO CART
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      <Products />
       <Newsletter />
       <Footer />
     </div>

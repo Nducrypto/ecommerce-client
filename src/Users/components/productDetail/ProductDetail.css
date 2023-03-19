@@ -1,6 +1,7 @@
 .wrapper{
   padding: 50px;
   display: flex;
+  margin-bottom: -5rem;
 
 }
 .imageContainer{

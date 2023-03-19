@@ -98,7 +98,7 @@ const App = () => {
           }
         />
         <Route path="/success" element={<Succes />} />
-        <Route path="/productDetail/:id" element={<ProductDetail />} />
+        <Route path="/productDetail/:title/:id" element={<ProductDetail />} />
         <Route path="/productlist/:category" element={<ProductList />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

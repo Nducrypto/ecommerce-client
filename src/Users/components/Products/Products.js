@@ -1,38 +1,91 @@
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 import "./products.css";
-
 import useFetch from "../../../States/Hooks/useFetch";
 import {
   Card,
-  CardContent,
   Typography,
   CardMedia,
-  CardActions,
   Grid,
-  CardHeader,
-  Rating,
   CircularProgress,
+  Box,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-const Products = () => {
-  const navigate = useNavigate();
 
-  const { products, isLoading, url } = useFetch("/products");
+const Products = () => {
+  // ===USED THIS PARAMS {id} IN PRODUCTDETAIL===
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { products, isLoading, url, setSort, filters, setFilters } =
+    useFetch("/products");
+
+  const searching = products?.filter((item) => item.title.includes(filters));
 
   const changer = url
-    ? products?.filter((item) => item.title === url)
+    ? products?.filter((item) => (item.title === url) & (item._id !== id))
+    : filters !== "All"
+    ? searching
     : products;
 
   return (
     <div className="p-container">
+      {!url && !id && (
+        <div className="filterContainer">
+          <div className="filter">
+            <span className="filterText">Category</span>
+            <select
+              onChange={(e) => setFilters(e.target.value)}
+              className="select"
+            >
+              <option selected value="All">
+                All
+              </option>
+              {products?.map((item) => (
+                <option key={item._id} value={item.title}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="filter">
+            <span className="filterText">Price</span>
+            <select
+              onChange={(e) => setSort(e.target.value)}
+              className="select"
+            >
+              <option selected disabled>
+                Price
+              </option>
+              <option value="maximum">Maximum</option>
+              <option value="minimum">Minimum</option>
+            </select>
+          </div>
+        </div>
+      )}
+
       {isLoading && <CircularProgress sx={{ fontSize: "4rem" }} />}
 
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         {changer?.map((item) => (
-          <Grid item xs={12} sm={3} md={2} key={item._id}>
+          <Grid item xs={6} sm={3} md={2} key={item._id}>
             {/* <span className="freedelivery">free delivery</span> */}
-
+            <Box
+              sx={{
+                position: "absolute",
+                fontSize: "0.9rem",
+                marginTop: ".3rem",
+                marginLeft: "1%",
+                backgroundColor:
+                  item.title === "Bluetooth" || item.title === "T-shirt"
+                    ? ""
+                    : "orange",
+                color: "white",
+              }}
+            >
+              {item.title === "Bluetooth" || item.title === "T-shirt" ? (
+                ""
+              ) : (
+                <>Free Delivery</>
+              )}
+            </Box>
             <Card
               sx={{
                 cursor: "pointer",
@@ -42,51 +95,23 @@ const Products = () => {
                   transform: "scale(1.04)",
                 },
               }}
-              onClick={() => navigate(`/productDetail/${item._id}`)}
+              onClick={() =>
+                navigate(`/productDetail/${item.title}/${item._id}`, {
+                  state: { id: item._id },
+                })
+              }
             >
-              <CardHeader
-                sx={{
-                  position: "absolute",
-                  fontSize: "0.9rem",
-                  marginTop: ".3rem",
-                  marginLeft: "1%",
-                  backgroundColor:
-                    item.title === "Bluetooth" || item.title === "T-shirt"
-                      ? ""
-                      : "orange",
-                  color: "white",
-                  height: "0.1rem",
-                }}
-                action={
-                  <>
-                    {item.title === "Bluetooth" || item.title === "T-shirt" ? (
-                      ""
-                    ) : (
-                      <>Free Delivery</>
-                    )}
-                  </>
-                }
+              <CardMedia
+                sx={{ height: { xs: 150, sm: 200, md: 200 } }}
+                image={item.image}
+                title=""
               />
-              <CardMedia sx={{ height: 200 }} image={item.image} title="" />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {item.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  &#8358; {Intl.NumberFormat().format(item.price)}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Rating
-                  name="text-feedback"
-                  value={item.rating}
-                  readOnly
-                  precision={item.rating}
-                  emptyIcon={
-                    <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
-                  }
-                />
-              </CardActions>
+              <Typography gutterBottom fontSize="1rem" component="div">
+                {item.title}
+              </Typography>
+              <Typography fontSize="1rem" color="black">
+                &#8358; {Intl.NumberFormat().format(item.price)}
+              </Typography>
             </Card>
           </Grid>
         ))}
