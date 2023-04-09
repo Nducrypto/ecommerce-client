@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
+import { useMemo } from "react";
 
 const Products = () => {
   // ===USED THIS PARAMS {id} IN PRODUCTDETAIL===
@@ -25,6 +26,12 @@ const Products = () => {
     ? searching
     : products;
 
+  // HOW TO DISPLAY ONE TITLE FROM MULTIPLE SIMILAR TITLES IN AN ARRAR
+  const titles = useMemo(
+    () => [...new Set(products.map(({ title }) => title))],
+    [products]
+  );
+
   return (
     <div className="p-container">
       {!url && !id && (
@@ -38,9 +45,9 @@ const Products = () => {
               <option selected value="All">
                 All
               </option>
-              {products?.map((item) => (
-                <option key={item._id} value={item.title}>
-                  {item.title}
+              {titles.map((title) => (
+                <option key={title} value={title}>
+                  {title}
                 </option>
               ))}
             </select>
