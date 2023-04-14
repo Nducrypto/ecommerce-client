@@ -83,6 +83,12 @@ const AllProducts = () => {
         onChange={(e) => setForm({ ...form, categories: e.target.value })}
       />
       <input
+        value={form.image}
+        type="url"
+        placeholder="image"
+        onChange={(e) => setForm({ ...form, image: e.target.value })}
+      />
+      <input
         value={form.size}
         placeholder="size"
         onChange={(e) => setForm({ ...form, size: e.target.value.split(",") })}

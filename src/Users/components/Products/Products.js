@@ -15,22 +15,43 @@ const Products = () => {
   // ===USED THIS PARAMS {id} IN PRODUCTDETAIL===
   const { id } = useParams();
   const navigate = useNavigate();
-  const { products, isLoading, url, setSort, filters, setFilters } =
-    useFetch("/products");
+  const {
+    products,
+    isLoading,
+    url,
+    sortPrice,
+    setSortPrice,
+    filters,
+    setFilters,
+  } = useFetch("/products");
 
-  const searching = products?.filter((item) => item.title.includes(filters));
+  // HOW TO DISPLAY ONE TITLE FROM MULTIPLE SIMILAR TITLES IN AN ARRAY
+  // const titles = useMemo(
+  //   () => [...new Set(products.map(({ title, price }) => ({ price, title })))],
+  //   [products]
+  // );
+  const titles = useMemo(() => {
+    const unique = [
+      ...new Set(
+        products
+          .map(({ title, image, _id }) => ({ title, image, _id }))
+          .filter(
+            (product, index, array) =>
+              array.findIndex((p) => p.title === product.title) === index
+          )
+      ),
+    ];
+    return unique;
+  }, [products]);
 
-  const changer = url
-    ? products?.filter((item) => (item.title === url) & (item._id !== id))
-    : filters !== "All"
-    ? searching
-    : products;
-
-  // HOW TO DISPLAY ONE TITLE FROM MULTIPLE SIMILAR TITLES IN AN ARRAR
-  const titles = useMemo(
-    () => [...new Set(products.map(({ title }) => title))],
-    [products]
-  );
+  const changer =
+    filters !== "All"
+      ? products?.filter((item) => item.title.includes(filters))
+      : url
+      ? products?.filter((item) => (item.title === url) & (item._id !== id))
+      : sortPrice
+      ? products
+      : titles;
 
   return (
     <div className="p-container">
@@ -45,9 +66,10 @@ const Products = () => {
               <option selected value="All">
                 All
               </option>
-              {titles.map((title) => (
-                <option key={title} value={title}>
-                  {title}
+
+              {titles.map((item) => (
+                <option key={item.title} value={item.title}>
+                  {item.title}
                 </option>
               ))}
             </select>
@@ -55,7 +77,7 @@ const Products = () => {
           <div className="filter">
             <span className="filterText">Price</span>
             <select
-              onChange={(e) => setSort(e.target.value)}
+              onChange={(e) => setSortPrice(e.target.value)}
               className="select"
             >
               <option selected disabled>
@@ -114,10 +136,12 @@ const Products = () => {
                 title=""
               />
               <Typography gutterBottom fontSize="1rem" component="div">
-                {item.title}
+                {item.title}s
               </Typography>
               <Typography fontSize="1rem" color="black">
-                &#8358; {Intl.NumberFormat().format(item.price)}
+                {filters !== "All" || url || sortPrice ? (
+                  <>&#8358; {Intl.NumberFormat().format(item.price)}</>
+                ) : null}
               </Typography>
             </Card>
           </Grid>

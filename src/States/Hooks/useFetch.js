@@ -8,9 +8,9 @@ const useFetch = (route) => {
   const location = useLocation();
   const url = location.pathname.split("/")[2];
 
-  const [filters, setFilters] = useState("");
+  const [filters, setFilters] = useState("All");
 
-  const [sort, setSort] = useState("");
+  const [sortPrice, setSortPrice] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
@@ -42,12 +42,12 @@ const useFetch = (route) => {
   // }, [filters, products]);
 
   useEffect(() => {
-    if (sort === "maximum") {
+    if (sortPrice === "maximum") {
       setProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
-    } else if (sort === "minimum") {
+    } else if (sortPrice === "minimum") {
       setProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
     }
-  }, [sort]);
+  }, [sortPrice]);
 
   return {
     products,
@@ -57,8 +57,8 @@ const useFetch = (route) => {
 
     filters,
     setFilters,
-    sort,
-    setSort,
+    sortPrice,
+    setSortPrice,
   };
 };
 
