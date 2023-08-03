@@ -25,11 +25,6 @@ const Products = () => {
     setFilters,
   } = useFetch("/products");
 
-  // HOW TO DISPLAY ONE TITLE FROM MULTIPLE SIMILAR TITLES IN AN ARRAY
-  // const titles = useMemo(
-  //   () => [...new Set(products.map(({ title, price }) => ({ price, title })))],
-  //   [products]
-  // );
   const titles = useMemo(() => {
     const unique = [
       ...new Set(
@@ -44,7 +39,7 @@ const Products = () => {
     return unique;
   }, [products]);
 
-  const changer =
+  const toggleSearch =
     filters !== "All"
       ? products?.filter((item) => item.title.includes(filters))
       : url
@@ -93,7 +88,7 @@ const Products = () => {
       {isLoading && <CircularProgress sx={{ fontSize: "4rem" }} />}
 
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        {changer?.map((item) => (
+        {toggleSearch?.map((item) => (
           <Grid item xs={6} sm={3} md={2} key={item._id}>
             {/* <span className="freedelivery">free delivery</span> */}
             <Box

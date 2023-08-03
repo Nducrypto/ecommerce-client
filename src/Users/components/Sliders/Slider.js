@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from "react";
-
 import "./Slider.css";
 import { sliderItems } from "../../../data";
 
 const Slider = () => {
-  const [currentSlide, setCurrentSlide] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCurrentSlide(currentSlide === 10 ? 1 : (prev) => prev + 1);
+    const timeOutId = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % sliderItems.length);
     }, 4500);
+    return () => clearTimeout(timeOutId);
   }, [currentSlide]);
 
   return (
-    <div className="container-slider">
-      {sliderItems.map((item, index) => {
-        return (
+    <div className="slider-container">
+      <div
+        className="slider-wrapper"
+        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+      >
+        {sliderItems.map((item, index) => (
           <div
             key={index}
-            className={
-              currentSlide === index + 1 ? "slide active-anim" : "slide"
-            }
+            className={`slide ${index === currentSlide ? "current-slide" : ""}`}
           >
             <img src={item.img} alt="" />
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 };
